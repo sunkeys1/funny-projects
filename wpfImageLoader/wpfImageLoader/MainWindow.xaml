@@ -7,8 +7,8 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Grid>
-        <Button x:Name="fromDB" Content="Load from database" HorizontalAlignment="Left" Margin="543,342,0,0" VerticalAlignment="Top" Width="146"/>
-        <Button x:Name="toDB" Content="Load to database" HorizontalAlignment="Left" Margin="153,342,0,0" VerticalAlignment="Top" Width="137"/>
+        <Button x:Name="fromDB" Content="Load from database" HorizontalAlignment="Left" Margin="543,342,0,0" VerticalAlignment="Top" Width="146" Click="fromDB_Click"/>
+        <Button x:Name="toDB" Content="Load to database" HorizontalAlignment="Left" Margin="153,342,0,0" VerticalAlignment="Top" Width="137" Click="toDB_Click"/>
         <Button x:Name="selectIMG" Content="Select image" HorizontalAlignment="Left" Margin="177,299,0,0" VerticalAlignment="Top" Width="89" Click="selectIMG_Click"/>
         <TextBox x:Name="tbId" HorizontalAlignment="Left" Height="20" Margin="571,299,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="118" Text="1" TextAlignment="Left"/>
         <Label Content="Id:" HorizontalAlignment="Left" Margin="543,296,0,0" VerticalAlignment="Top"/>

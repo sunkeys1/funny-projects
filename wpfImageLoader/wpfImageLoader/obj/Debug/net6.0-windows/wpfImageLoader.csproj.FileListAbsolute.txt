@@ -19,3 +19,12 @@ G:\funny-projects\wpfImageLoader\wpfImageLoader\obj\Debug\net6.0-windows\refint\
 G:\funny-projects\wpfImageLoader\wpfImageLoader\obj\Debug\net6.0-windows\wpfImageLoader.pdb
 G:\funny-projects\wpfImageLoader\wpfImageLoader\obj\Debug\net6.0-windows\wpfImageLoader.genruntimeconfig.cache
 G:\funny-projects\wpfImageLoader\wpfImageLoader\obj\Debug\net6.0-windows\ref\wpfImageLoader.dll
+G:\funny-projects\wpfImageLoader\wpfImageLoader\bin\Debug\net6.0-windows\EntityFramework.SqlServer.dll
+G:\funny-projects\wpfImageLoader\wpfImageLoader\bin\Debug\net6.0-windows\EntityFramework.dll
+G:\funny-projects\wpfImageLoader\wpfImageLoader\bin\Debug\net6.0-windows\System.Data.SqlClient.dll
+G:\funny-projects\wpfImageLoader\wpfImageLoader\bin\Debug\net6.0-windows\runtimes\win-arm64\native\sni.dll
+G:\funny-projects\wpfImageLoader\wpfImageLoader\bin\Debug\net6.0-windows\runtimes\win-x64\native\sni.dll
+G:\funny-projects\wpfImageLoader\wpfImageLoader\bin\Debug\net6.0-windows\runtimes\win-x86\native\sni.dll
+G:\funny-projects\wpfImageLoader\wpfImageLoader\bin\Debug\net6.0-windows\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
+G:\funny-projects\wpfImageLoader\wpfImageLoader\bin\Debug\net6.0-windows\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+G:\funny-projects\wpfImageLoader\wpfImageLoader\obj\Debug\net6.0-windows\wpfImageLoader.csproj.CopyComplete
