@@ -76,6 +76,7 @@ namespace wpfImageLoader
             SqlConnection connect = new SqlConnection(connectionString);
             SqlCommand cmd = new SqlCommand("INSERT INTO imgTest (img) VALUES (@igm)", connect);
             String? strFilePath = testLabel.Content.ToString();
+            
 
             //Read jpg into file stream, and from there into Byte array.
             FileStream fsBLOBFile = new FileStream(strFilePath, FileMode.Open, FileAccess.Read);
@@ -134,23 +135,27 @@ namespace wpfImageLoader
             connect.Open();
 
             //Retrieve BLOB from database into DataSet.
-            SqlCommand sqlCmd = new SqlCommand($"SELECT img FROM imgTest WHERE Id = {Convert.ToInt32(tbId.Text)}", connect);
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCmd);
-            DataSet dataSet = new DataSet();
-            dataAdapter.Fill(dataSet, "imgTest");
-            int c = dataSet.Tables["imgTest"].Rows.Count;
-
-            if (c > 0)
+            if (int.TryParse(tbId.Text, out int result))
             {
-                //BLOB is read into Byte array, then used to construct MemoryStream,
-                //then passed to PictureBox.
-                Byte[] byteBLOBData = new Byte[0];
-                byteBLOBData = (Byte[])(dataSet.Tables["imgTest"].Rows[c - 1]["img"]);
-                MemoryStream stmBLOBData = new MemoryStream(byteBLOBData);
-                imgFromDB.Source = BitmapFrame.Create(stmBLOBData,
-                                                  BitmapCreateOptions.None,
-                                                  BitmapCacheOption.OnLoad);
+                SqlCommand sqlCmd = new SqlCommand($"SELECT img FROM imgTest WHERE Id = {result}", connect);
+
+                SqlDataAdapter dataAdapter = new SqlDataAdapter(sqlCmd);
+                DataSet dataSet = new DataSet();
+                dataAdapter.Fill(dataSet, "imgTest");
+                int c = dataSet.Tables["imgTest"].Rows.Count;
+                if (c > 0)
+                {
+                    //BLOB is read into Byte array, then used to construct MemoryStream,
+                    //then passed to PictureBox.
+                    Byte[] byteBLOBData = new Byte[0];
+                    byteBLOBData = (Byte[])(dataSet.Tables["imgTest"].Rows[c - 1]["img"]);
+                    MemoryStream stmBLOBData = new MemoryStream(byteBLOBData);
+                    imgFromDB.Source = BitmapFrame.Create(stmBLOBData,
+                                                      BitmapCreateOptions.None,
+                                                      BitmapCacheOption.OnLoad);
+                }
             }
+
             connect.Close();
 
 
