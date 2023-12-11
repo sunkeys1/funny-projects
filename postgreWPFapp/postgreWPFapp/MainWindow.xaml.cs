@@ -33,8 +33,10 @@ namespace postgreWPFapp
         {
             GetData(combo.SelectedIndex);
             var curr = combo.Items.Count;
-            //var value = (string)curr;
             l1.Content = curr;
+            //var value = (string)curr;
+            
+            //l1.Content = combo.SelectedValuePath.ToString();
 
             
         }
@@ -43,29 +45,17 @@ namespace postgreWPFapp
         {
             dataGrid.ItemsSource = null;
             l1.Content = null;
+            
         }
         public void GetData(int selected)
         {
-            string table = "";
-            string[] sqlQrrys = { "users", "games" };
-            switch (selected)
+            var selectedValue = combo.SelectedValue;
+            if (selectedValue != null)
             {
-                case 0:
-                    table = "users";
-                    break;
-                case 1:
-                    table = "games";
-                    break;
-
-
-                default:
-                    break;
-            }
-            if (sqlQrrys.Contains(table))
-            {
-
+                string selectedName = selectedValue.ToString();
                 string connectionString = "Server=localhost;Database=pgDB;Port=5432;User Id=postgres;Password=postg";
-                string sqlQuery = $"SELECT * FROM {table}";
+                string sqlQuery = $"SELECT * FROM {selectedName}";
+                //string sqlQuery = "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'";
 
                 using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
                 {
@@ -75,7 +65,7 @@ namespace postgreWPFapp
                     {
                         NpgsqlDataAdapter dataAdapter = new NpgsqlDataAdapter(command);
                         DataTable dataTable = new DataTable();
-                        dataAdapter.Fill(dataTable);
+                        dataAdapter.Fill(dataTable);  // crashing here if table name have a numbers or other symbols
 
                         dataGrid.ItemsSource = dataTable.DefaultView;
 
@@ -96,13 +86,14 @@ namespace postgreWPFapp
                 combo.Visibility = collaps;
                 getData.Visibility = collaps;
                 l1.Visibility = collaps;
+                loadTables.Visibility = collaps;
                 img.Visibility = visible;
                 change.Content = "To Data";
 
             }
             else
             {
-
+                loadTables.Visibility = visible;
                 clearData.Visibility = visible;
                 dataGrid.Visibility = visible;
                 combo.Visibility = visible;
@@ -112,6 +103,39 @@ namespace postgreWPFapp
                 change.Content = "To Settings";
             }
             
+        }
+
+        private void loadTables_Click(object sender, RoutedEventArgs e)
+        {
+            combo.Items.Clear();
+            string connectionString = "Server=localhost;Database=pgDB;Port=5432;User Id=postgres;Password=postg";
+            string sqlQuery = "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'";
+
+            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (NpgsqlCommand command = new NpgsqlCommand(sqlQuery, connection))
+                {
+                    var reader = command.ExecuteReader();
+                    List<string> tables = new List<string>();
+                    while (reader.Read())
+                    {
+                        string tableName = reader.GetString(0);
+                        tables.Add(tableName);
+                    }
+                    
+                    foreach(var ta in tables)
+                    {
+                        combo.Items.Add(ta);
+                    }
+                }
+                connection.Close();
+            }
+
+
+
+            //combo.Items.Add("Bebra");
         }
     }
 }
