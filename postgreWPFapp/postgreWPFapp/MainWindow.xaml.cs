@@ -25,8 +25,33 @@ namespace postgreWPFapp
         public MainWindow()
         {
             InitializeComponent();
-            
-            
+            combo.Items.Clear();
+            string connectionString = "Server=localhost;Database=pgDB;Port=5432;User Id=postgres;Password=postg";
+            string sqlQuery = "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'";
+
+            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+            {
+                connection.Open();
+
+                using (NpgsqlCommand command = new NpgsqlCommand(sqlQuery, connection))
+                {
+                    var reader = command.ExecuteReader();
+                    List<string> tables = new List<string>();
+                    while (reader.Read())
+                    {
+                        string tableName = reader.GetString(0);
+                        tables.Add(tableName);
+                    }
+
+                    foreach (var ta in tables)
+                    {
+                        combo.Items.Add(ta);
+                    }
+                }
+                connection.Close();
+            }
+
+
         }
 
         private void getData_Click(object sender, RoutedEventArgs e)
@@ -55,6 +80,7 @@ namespace postgreWPFapp
                 string selectedName = selectedValue.ToString();
                 string connectionString = "Server=localhost;Database=pgDB;Port=5432;User Id=postgres;Password=postg";
                 string sqlQuery = $"SELECT * FROM {selectedName}";
+                //string sqlQuery = $"SELECT *, to_char(four, 'DD.MM.YYYY') AS four FROM {selectedName}";
                 //string sqlQuery = "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'";
 
                 using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
@@ -107,31 +133,31 @@ namespace postgreWPFapp
 
         private void loadTables_Click(object sender, RoutedEventArgs e)
         {
-            combo.Items.Clear();
-            string connectionString = "Server=localhost;Database=pgDB;Port=5432;User Id=postgres;Password=postg";
-            string sqlQuery = "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'";
+            //combo.Items.Clear();
+            //string connectionString = "Server=localhost;Database=pgDB;Port=5432;User Id=postgres;Password=postg";
+            //string sqlQuery = "SELECT table_name FROM information_schema.tables WHERE table_schema = 'public'";
 
-            using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
-            {
-                connection.Open();
+            //using (NpgsqlConnection connection = new NpgsqlConnection(connectionString))
+            //{
+            //    connection.Open();
 
-                using (NpgsqlCommand command = new NpgsqlCommand(sqlQuery, connection))
-                {
-                    var reader = command.ExecuteReader();
-                    List<string> tables = new List<string>();
-                    while (reader.Read())
-                    {
-                        string tableName = reader.GetString(0);
-                        tables.Add(tableName);
-                    }
+            //    using (NpgsqlCommand command = new NpgsqlCommand(sqlQuery, connection))
+            //    {
+            //        var reader = command.ExecuteReader();
+            //        List<string> tables = new List<string>();
+            //        while (reader.Read())
+            //        {
+            //            string tableName = reader.GetString(0);
+            //            tables.Add(tableName);
+            //        }
                     
-                    foreach(var ta in tables)
-                    {
-                        combo.Items.Add(ta);
-                    }
-                }
-                connection.Close();
-            }
+            //        foreach(var ta in tables)
+            //        {
+            //            combo.Items.Add(ta);
+            //        }
+            //    }
+            //    connection.Close();
+            //}
 
 
 
